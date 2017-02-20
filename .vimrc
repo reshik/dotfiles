@@ -187,6 +187,17 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 let NERDTreeHijackNetrw = 0
 nmap <Leader>1 :NERDTreeToggle<cr>
 
+Plug 'StanAngeloff/php.vim'
+function! PhpSyntaxOverride()
+  hi! def link phpDocTags  phpDefine
+  hi! def link phpDocParam phpType
+endfunction
+
+augroup phpSyntaxOverride
+  autocmd!
+  autocmd FileType php call PhpSyntaxOverride()
+augroup END
+
 "Add plugins to &runtimepath
 call plug#end()
 
