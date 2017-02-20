@@ -53,6 +53,15 @@ set encoding=utf-8
 " confusing.
 set nrformats-=octal
 
+" by default, the indent is 2 spaces. 
+set shiftwidth=2
+set softtabstop=2
+set tabstop=2
+
+" for php/js/coffee/jade files, 4 spaces
+autocmd Filetype php setlocal ts=4 sw=4 sts=0 expandtab
+
+
 " For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries.
 if has('win32')
   set guioptions-=t
@@ -187,12 +196,27 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 let NERDTreeHijackNetrw = 0
 nmap <Leader>1 :NERDTreeToggle<cr>
 
+Plug 'vim-syntastic/syntastic'
+" Statusline already packaged with PowerLine
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 1
+"let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
+let g:syntastic_php_checkers = ['php', 'phpmd']
+let g:syntastic_error_symbol = '✗✗'
+let g:syntastic_style_error_symbol = '✠✠'
+let g:syntastic_warning_symbol = '∆∆'
+let g:syntastic_style_warning_symbol = '≈≈'
+
 Plug 'StanAngeloff/php.vim'
 function! PhpSyntaxOverride()
   hi! def link phpDocTags  phpDefine
   hi! def link phpDocParam phpType
 endfunction
-
 augroup phpSyntaxOverride
   autocmd!
   autocmd FileType php call PhpSyntaxOverride()
@@ -200,4 +224,8 @@ augroup END
 
 "Add plugins to &runtimepath
 call plug#end()
+
+
+
+
 
